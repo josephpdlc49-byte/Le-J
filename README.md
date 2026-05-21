@@ -51,4 +51,3 @@ def detail_robot(robot_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
-clap la goat
