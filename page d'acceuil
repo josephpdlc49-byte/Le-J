@@ -22,6 +22,11 @@
     .nav-btn.active { background: #e6f1fb; color: #185FA5; border-color: transparent; }
     .nav-btn.login { margin-left: auto; border-color: #185FA5; color: #185FA5; }
 
+    .year-filter { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 1.5rem 1rem; }
+    .year-title { font-size: 14px; margin-bottom: 4px; color: #55523f; font-weight: 600; }
+    .year-btn { font-size: 12px; padding: 6px 12px; border: 1px solid #d3d1c7; border-radius: 999px; background: transparent; color: #888780; text-decoration: none; }
+    .year-btn.active { background: #e6f1fb; color: #185FA5; border-color: transparent; }
+
     /* Stats */
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 1rem 1.5rem; }
     .stat { background: white; border-radius: 8px; padding: 10px 12px; }
@@ -63,9 +68,16 @@
     </div>
     <div class="nav">
       <a href="/" class="nav-btn active">Tous les robots</a>
-      <a href="#" class="nav-btn">Classements</a>
+      <a href="/classements" class="nav-btn">Classements</a>
       <a href="#" class="nav-btn">Équipes</a>
       <a href="#" class="nav-btn login">Connexion équipe</a>
+    </div>
+    <div class="year-filter">
+      <div class="year-title">Années</div>
+      <a href="/" class="year-btn {% if not selected_year %}active{% endif %}">Tous</a>
+      {% for year in years %}
+      <a href="/?annee={{ year }}" class="year-btn {% if selected_year == year %}active{% endif %}">{{ year }}</a>
+      {% endfor %}
     </div>
   </div>
 
