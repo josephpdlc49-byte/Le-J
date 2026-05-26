@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ robot.nom }} — RoboArchive</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; }
+
+    /* Header */
+    .header { background: white; padding: 1.5rem; border-bottom: 1px solid #e0ded8; }
+    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .logo-icon { width: 36px; height: 36px; background: #185FA5; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon i { font-size: 20px; color: #E6F1FB; }
+    .logo-title { font-size: 18px; font-weight: 500; }
+    .logo-sub { font-size: 13px; color: #888780; }
+    .nav { display: flex; gap: 8px; }
+    .nav-btn { font-size: 13px; padding: 6px 14px; border: 1px solid #d3d1c7; border-radius: 8px; background: transparent; color: #888780; cursor: pointer; text-decoration: none; }
+    .nav-btn.back { border-color: #185FA5; color: #185FA5; display: flex; align-items: center; gap: 6px; }
+
+    /* Fiche robot */
+    .fiche { background: white; margin: 1.5rem; border-radius: 12px; border: 1px solid #e0ded8; overflow: hidden; }
+    .fiche-img { width: 100%; height: 200px; background: #f1efe8; display: flex; align-items: center; justify-content: center; }
+    .fiche-img i { font-size: 80px; color: #888780; opacity: 0.3; }
+    .fiche-body { padding: 1.5rem; }
+    .fiche-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .fiche-nom { font-size: 24px; font-weight: 500; }
+    .comp-badge { font-size: 13px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+    .badge-FRC  { background: #E6F1FB; color: #0C447C; }
+    .badge-ECAM { background: #EAF3DE; color: #27500A; }
+
+    /* Infos */
+    .infos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+    .info { background: #f5f5f3; border-radius: 8px; padding: 10px 12px; }
+    .info-label { font-size: 11px; color: #888780; margin-bottom: 4px; }
+    .info-value { font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+    .info-value i { color: #BA7517; }
+
+    /* Description */
+    .description-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+    .description-text { font-size: 14px; color: #555450; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-robot"></i></div>
+      <div>
+        <div class="logo-title">RoboArchive</div>
+        <div class="logo-sub">Archive FRC & ECAM</div>
+      </div>
+    </div>
+    <div class="nav">
+      <a href="/" class="nav-btn back"><i class="ti ti-arrow-left"></i> Retour</a>
+    </div>
+  </div>
+
+  <!-- Fiche robot -->
+  <div class="fiche">
+    <div class="fiche-img"><i class="ti ti-robot"></i></div>
+    <div class="fiche-body">
+
+      <div class="fiche-header">
+        <div class="fiche-nom">{{ robot.nom }}</div>
+        <span class="comp-badge badge-{{ robot.competition }}">{{ robot.competition }}</span>
+      </div>
+
+      <div class="infos">
+        <div class="info">
+          <div class="info-label">Équipe</div>
+          <div class="info-value"><i class="ti ti-users"></i> {{ robot.equipe }}</div>
+        </div>
+        <div class="info">
+          <div class="info-label">Année</div>
+          <div class="info-value"><i class="ti ti-calendar"></i> {{ robot.annee }}</div>
+        </div>
+        <div class="info">
+          <div class="info-label">Classement</div>
+          <div class="info-value"><i class="ti ti-trophy"></i> {{ robot.classement }}e place</div>
+        </div>
+      </div>
+
+      <div class="description-title">Description</div>
+      <div class="description-text">{{ robot.description }}</div>
+
+    </div>
+  </div>
+
+</body>
+</html>
