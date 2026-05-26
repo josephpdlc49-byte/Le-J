@@ -1,6 +1,6 @@
-
-
-from Flask import Flask; render_template # type: ignore
+import threading
+import webbrowser
+from flask import Flask, render_template # type: ignore
 
 app = Flask(__name__)
 
@@ -38,7 +38,7 @@ robots = [
 # --- Page d'accueil ---
 @app.route("/")
 def accueil():
-    return render_template("accueil.html", robots=robots) # type: ignore
+    return render_template("acceuil.html", robots=robots) # type: ignore
 
 # --- Page détail d'un robot ---
 @app.route("/robot/<int:robot_id>")
@@ -49,5 +49,11 @@ def detail_robot(robot_id):
         return "Robot introuvable", 404
     return render_template("detail.html", robot=robot) # type: ignore
 
+# Ouvre le navigateur automatiquement sur la page d'accueil
+
+def open_browser():
+    webbrowser.open_new("http://127.0.0.1:5000/")
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    threading.Timer(1.0, open_browser).start()
+    app.run(debug=True, use_reloader=False)
