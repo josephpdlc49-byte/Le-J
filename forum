@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Groupe RoboArchive</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: linear-gradient(180deg, #e6efff 0%, #f7fbff 100%); color: #1a1a18; }
+    .header { background: rgba(255,255,255,0.95); padding: 1.5rem; border-bottom: 1px solid #dbeafe; backdrop-filter: blur(10px); }
+    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .logo-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0f3b7c; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .logo-title { font-size: 18px; font-weight: 600; color: #0f3b7c; }
+    .logo-sub { font-size: 13px; color: #475569; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .nav-btn { font-size: 13px; padding: 8px 14px; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475569; cursor: pointer; text-decoration: none; }
+    .nav-btn.active { background: #0f3b7c; color: #fff; border-color: transparent; }
+    .content { max-width: 980px; margin: 1.5rem auto; padding: 0 1.5rem; }
+    .group-card { display: flex; justify-content: space-between; gap: 1rem; align-items: center; background: #eff6ff; border: 1px solid #dbeafe; border-radius: 24px; padding: 1.4rem 1.5rem; margin-bottom: 1.5rem; }
+    .group-info { display: flex; gap: 1rem; align-items: center; }
+    .group-avatar { width: 70px; height: 70px; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; }
+    .group-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .group-title { font-size: 24px; font-weight: 700; margin-bottom: 0.25rem; }
+    .group-subtitle { color: #4b5563; font-size: 14px; max-width: 520px; }
+    .group-stats { display: flex; gap: 1rem; color: #374151; font-size: 13px; }
+    .group-stats div { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; padding: 0.9rem 1rem; min-width: 110px; text-align: center; }
+    .group-stats strong { display: block; color: #111827; font-size: 18px; }
+    .story-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    .story { min-width: 110px; background: white; border: 1px solid #e5e7eb; border-radius: 22px; padding: 1rem 0.9rem; text-align: center; cursor: pointer; }
+    .story strong { display: block; margin-top: 0.75rem; font-size: 13px; color: #374151; }
+    .story span { display: block; margin-top: 0.25rem; font-size: 12px; color: #6b7280; }
+    .post-card, .feed-card { background: white; border: 1px solid #e5e7eb; border-radius: 24px; padding: 1.25rem; margin-bottom: 1rem; }
+    .post-card h2 { font-size: 18px; margin-bottom: 0.5rem; }
+    .post-card textarea { width: 100%; border: 1px solid #d1d5db; border-radius: 16px; padding: 1rem; font-size: 14px; background: #f9fafb; resize: vertical; min-height: 120px; }
+    .post-card .post-actions { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; }
+    .post-card .post-actions button { border: none; border-radius: 999px; padding: 0.85rem 1.3rem; font-size: 14px; font-weight: 600; background: #185FA5; color: white; cursor: pointer; }
+    .feed-card .feed-header { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.85rem; }
+    .feed-avatar { width: 44px; height: 44px; border-radius: 50%; background: #dbeafe; color: #1e40af; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
+    .feed-user { display: flex; flex-direction: column; }
+    .feed-user strong { font-size: 14px; color: #111827; }
+    .feed-user span { font-size: 12px; color: #6b7280; }
+    .feed-message { font-size: 15px; line-height: 1.75; color: #374151; margin-bottom: 1rem; white-space: pre-wrap; }
+    .feed-actions { display: flex; gap: 1rem; color: #6b7280; font-size: 13px; }
+    .feed-actions span { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; }
+    .feed-empty { color: #6b7280; font-size: 14px; }
+    .nav-btn:first-child { margin-left: 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <img src="{{ url_for('template_logo') }}" alt="Logo RoboArchive" onerror="this.style.display='none'" />
+      </div>
+      <div>
+        <div class="logo-title">RoboArchive</div>
+        <div class="logo-sub">Archive FTC & ECAM</div>
+      </div>
+    </div>
+    <div class="nav">
+      <a href="/" class="nav-btn {% if active_page == 'home' %}active{% endif %}">Tous les robots</a>
+      <a href="/classements" class="nav-btn {% if active_page == 'classements' %}active{% endif %}">Classements</a>
+      <a href="/forum" class="nav-btn {% if active_page == 'forum' %}active{% endif %}">Forum</a>
+      <a href="/contacts" class="nav-btn {% if active_page == 'contacts' %}active{% endif %}">Contacts</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="group-card">
+      <div class="group-info">
+        <div class="group-avatar">
+          <img src="{{ url_for('template_logo') }}" alt="Logo ECAM FIRST" onerror="this.style.display='none'" />
+        </div>
+        <div>
+          <div class="group-title">Groupe RoboArchive</div>
+          <div class="group-subtitle">Un espace de discussion en direct, comme un groupe Instagram pour les passionnés de robots.</div>
+        </div>
+      </div>
+      <div class="group-stats">
+        <div><strong>{{ messages|length }}</strong> messages</div>
+        <div><strong>12</strong> membres</div>
+      </div>
+    </div>
+
+    <div class="story-strip">
+      <div class="story"><strong>📸 Stories</strong><span>Partage rapide</span></div>
+      <div class="story"><strong>💡 Astuces</strong><span>Conseils</span></div>
+      <div class="story"><strong>🤖 Robots</strong><span>Discussions</span></div>
+      <div class="story"><strong>🏆 Compétitions</strong><span>Résultats</span></div>
+      <div class="story"><strong>📣 Annonces</strong><span>Infos utiles</span></div>
+    </div>
+
+    <div class="post-card">
+      <h2>Nouveau post</h2>
+      <textarea id="message" name="message" placeholder="Écris quelque chose..." form="forumForm"></textarea>
+      <div class="post-actions">
+        <button type="submit" form="forumForm"><i class="ti ti-send"></i> Publier</button>
+      </div>
+    </div>
+
+    <form id="forumForm" method="post" action="/forum/post" style="display:none;">
+      <input type="text" id="pseudo" name="pseudo" placeholder="Votre nom ou pseudonyme" />
+    </form>
+
+    <div id="forumMessages">
+      {% if messages %}
+        {% for msg in messages|reverse %}
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-avatar">{{ msg.pseudo[:2]|upper }}</div>
+            <div class="feed-user">
+              <strong>{{ msg.pseudo }}</strong>
+              <span>il y a quelques secondes</span>
+            </div>
+          </div>
+          <div class="feed-message">{{ msg.message }}</div>
+          <div class="feed-actions">
+            <span><i class="ti ti-heart"></i> J'aime</span>
+            <span><i class="ti ti-message-circle"></i> Commenter</span>
+            <span><i class="ti ti-share"></i> Partager</span>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="feed-empty">Aucun message pour le moment. Lance la première conversation !</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    const forumMessagesEl = document.getElementById('forumMessages');
+    const form = document.getElementById('forumForm');
+    const pseudoInput = document.getElementById('pseudo');
+    const messageInput = document.getElementById('message');
+
+    function renderMessages(messages) {
+      if (!messages.length) {
+        forumMessagesEl.innerHTML = '<p class="feed-empty">Aucun message pour le moment. Lance la première conversation !</p>';
+        return;
+      }
+      forumMessagesEl.innerHTML = messages.slice().reverse().map(msg => `
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-avatar">${msg.pseudo.slice(0, 2).toUpperCase()}</div>
+            <div class="feed-user">
+              <strong>${msg.pseudo}</strong>
+              <span>il y a quelques secondes</span>
+            </div>
+          </div>
+          <div class="feed-message">${msg.message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+          <div class="feed-actions">
+            <span><i class="ti ti-heart"></i> J'aime</span>
+            <span><i class="ti ti-message-circle"></i> Commenter</span>
+            <span><i class="ti ti-share"></i> Partager</span>
+          </div>
+        </div>
+      `).join('');
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    async function loadMessages() {
+      try {
+        const response = await fetch('/forum/messages');
+        if (!response.ok) return;
+        const data = await response.json();
+        renderMessages(data.messages || []);
+      } catch (error) {
+        console.error('Erreur forum:', error);
+      }
+    }
+
+    async function submitMessage(event) {
+      event.preventDefault();
+      const pseudo = pseudoInput.value.trim() || 'Anon';
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      const formData = new FormData();
+      formData.append('pseudo', pseudo);
+      formData.append('message', message);
+
+      try {
+        const response = await fetch('/forum/post', {
+          method: 'POST',
+          body: formData,
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        renderMessages(data.messages || []);
+        messageInput.value = '';
+        pseudoInput.value = pseudo;
+      } catch (error) {
+        console.error('Erreur envoi message:', error);
+      }
+    }
+
+    form.addEventListener('submit', submitMessage);
+    loadMessages();
+    setInterval(loadMessages, 3000);
+  </script>
+</body>
+</html>
