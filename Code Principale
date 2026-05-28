@@ -1,10 +1,10 @@
-import threading
-import webbrowser
+import threading # permet d'executer plusieurs taches en parrallèle
+import webbrowser #permet d'ouvrir automatiquement un navigateur depuis Python
 from flask import Flask, render_template, send_from_directory, request, jsonify # type: ignore
 
 app = Flask(__name__)
 
-# --- Données de test (plus tard ce sera une vraie base de données) ---
+# permet d'importer les données des robots
 robots = [
     {
         "id": 1,
@@ -25,11 +25,11 @@ robots = [
         "description": "Robot rapide spécialisé dans la collecte d'objets."
     },
 ]
-
+# permet de pouvoir comuniquer avec les participants de ton année
 forum_messages = [
     {"pseudo": "RoboArchive", "message": "Bienvenue sur le forum de discussion !"}
 ]
-
+# permet de pouvoir contacter les anciens chefs de projets si besoin 
 ancien_participants = [
     {"nom": "Lina Dupont", "promo": "2024", "role": "Pilote", "email": "lina.dupont@example.com", "tel": "+33 6 12 34 56 78"},
     {"nom": "Karim Martin", "promo": "2023", "role": "Stratégie", "email": "karim.martin@example.com", "tel": "+33 6 87 65 43 21"},
@@ -43,7 +43,7 @@ def accueil():
     selected_year = request.args.get("annee", type=int)
     robots_filtered = [r for r in robots if r["annee"] == selected_year] if selected_year is not None else robots
     years = sorted({r["annee"] for r in robots}, reverse=True)
-    return render_template("acceuil.html", robots=robots_filtered, years=years, selected_year=selected_year, active_page="home") # type: ignore
+    return render_template("acceuil.html", robots=robots_filtered, years=years, selected_year=selected_year, active_page="home") 
 
 # --- Page détail d'un robot ---
 @app.route("/robot/<int:robot_id>")
@@ -53,16 +53,16 @@ def detail_robot(robot_id):
     if robot is None:
         return "Robot introuvable", 404
     return render_template("detail.html", robot=robot, active_page="detail") # type: ignore
-
+# page de contacts
 @app.route("/contacts")
 def contacts():
     return render_template("contacts.html", participants=ancien_participants, active_page="contacts") # type: ignore
-
+#page de classements
 @app.route("/classements")
 def classements():
     robots_sorted = sorted(robots, key=lambda r: r["classement"])
     return render_template("classements.html", robots=robots_sorted, active_page="classements") # type: ignore
-
+# forum de discussion
 @app.route("/forum")
 def forum():
     return render_template("forum.html", messages=forum_messages, active_page="forum") # type: ignore
@@ -78,7 +78,7 @@ def forum_post():
     if message:
         forum_messages.append({"pseudo": pseudo, "message": message})
     return jsonify({"success": True, "messages": forum_messages})
-
+# affiche du logo ECAM et FIRST robotique
 @app.route('/template-logo.png')
 def template_logo():
     return send_from_directory(app.template_folder, 'ECAM___FIRST_Logo.png')
