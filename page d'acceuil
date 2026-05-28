@@ -7,50 +7,43 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; }
-
-    /* Header */
-    .header { background: white; padding: 1.5rem; border-bottom: 1px solid #e0ded8; }
-    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-    .logo-icon { width: 60px; height: 60px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #185FA5; }
+    body { font-family: system-ui, sans-serif; background-color: #003366; color: #1a1a18; }
+    .header { background: rgba(67, 27, 230, 0.92); padding: 1.5rem; border-bottom: 1px solid #dbeafe; backdrop-filter: blur(10px); }
+    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+    .logo-icon { width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #003366; }
     .logo-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
-    .logo-icon i { font-size: 24px; color: #E6F1FB; }
-    .logo-title { font-size: 18px; font-weight: 500; }
-    .logo-sub { font-size: 13px; color: #888780; }
-    .nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .nav-btn { font-size: 13px; padding: 6px 14px; border: 1px solid #d3d1c7; border-radius: 8px; background: transparent; color: #888780; cursor: pointer; text-decoration: none; }
-    .nav-btn.active { background: #e6f1fb; color: #185FA5; border-color: transparent; }
-    .nav-btn.login { margin-left: auto; border-color: #185FA5; color: #185FA5; }
-
-    .year-filter { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 1.5rem 1rem; }
-    .year-title { font-size: 14px; margin-bottom: 4px; color: #55523f; font-weight: 600; }
-    .year-btn { font-size: 12px; padding: 6px 12px; border: 1px solid #d3d1c7; border-radius: 999px; background: transparent; color: #888780; text-decoration: none; }
-    .year-btn.active { background: #e6f1fb; color: #185FA5; border-color: transparent; }
-
-    /* Stats */
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 1rem 1.5rem; }
-    .stat { background: white; border-radius: 8px; padding: 10px 12px; }
-    .stat-num { font-size: 22px; font-weight: 500; }
-    .stat-label { font-size: 12px; color: #888780; margin-top: 2px; }
-
-    /* Grille robots */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; padding: 0 1.5rem 1.5rem; }
-    .robot-card { background: white; border: 1px solid #e0ded8; border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s; }
-    .robot-card:hover { border-color: #b4b2a9; }
-    .robot-img { width: 100%; height: 120px; background: #f1efe8; display: flex; align-items: center; justify-content: center; }
-    .robot-img i { font-size: 40px; color: #888780; opacity: 0.4; }
-    .robot-body { padding: 12px; }
-    .robot-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-    .robot-name { font-size: 14px; font-weight: 500; }
-    .comp-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
-    .badge-FRC  { background: #E6F1FB; color: #0C447C; }
-    .badge-FTC  { background: #FFF3E0; color: #E65100; }
-    .badge-ECAM { background: #EAF3DE; color: #27500A; }
-    .robot-meta { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .robot-team { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 4px; }
-    .rank { display: flex; align-items: center; gap: 4px; font-size: 12px; margin-top: 6px; }
-    .rank i { font-size: 14px; color: #BA7517; }
-    .rank span { color: #888780; }
+    .logo-title { font-size: 20px; font-weight: 700; color: #003366; }
+    .logo-sub { font-size: 13px; color: #475569; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+    .nav-btn { font-size: 13px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475569; cursor: pointer; text-decoration: none; transition: transform 0.15s ease, background-color 0.15s ease; }
+    .nav-btn:hover { transform: translateY(-1px); }
+    .nav-btn.active { background: #003366; color: #fff; border-color: transparent; }
+    .year-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 1rem 1.5rem; }
+    .year-title { font-size: 14px; color: #334155; font-weight: 700; }
+    .year-btn { font-size: 12px; padding: 8px 14px; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475569; text-decoration: none; }
+    .year-btn.active { background: #cfe2ff; color: #003366; border-color: transparent; }
+    .hero { padding: 0 1.5rem 1.5rem; }
+    .hero-title { font-size: 32px; margin-bottom: 0.5rem; color: #0f172a; }
+    .hero-text { max-width: 720px; color: #475569; line-height: 1.7; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding: 0 1.5rem 1.5rem; }
+    .stat { background: white; border-radius: 18px; padding: 18px 16px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04); }
+    .stat-num { font-size: 28px; font-weight: 700; color: #0f172a; }
+    .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; letter-spacing: 0.02em; text-transform: uppercase; }
+    .grid { background: #003366; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; padding: 0 1.5rem 2rem; }
+    .robot-card { background: white; border: 1px solid #e2e8f0; border-radius: 18px; overflow: hidden; text-decoration: none; color: inherit; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .robot-card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08); }
+    .robot-img { width: 100%; height: 140px; background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%); display: flex; align-items: center; justify-content: center; }
+    .robot-img i { font-size: 42px; color: #64748b; opacity: 0.45; }
+    .robot-body { padding: 18px 16px; }
+    .robot-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .robot-name { font-size: 16px; font-weight: 700; color: #0f172a; }
+    .comp-badge { font-size: 11px; padding: 4px 12px; border-radius: 999px; font-weight: 700; text-transform: uppercase; }
+    .badge-FRC  { background: #e0f2ff; color: #0c4a6e; }
+    .badge-FTC  { background: #fff1df; color: #b45309; }
+    .badge-ECAM { background: #ecfdf5; color: #166534; }
+    .robot-meta { font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .rank { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #475569; }
+    .rank i { font-size: 14px; color: #d97706; }
   </style>
 </head>
 <body>
@@ -67,10 +60,14 @@
       </div>
     </div>
     <div class="nav">
-      <a href="/" class="nav-btn active">Tous les robots</a>
-      <a href="/classements" class="nav-btn">Classements</a>
-      <a href="#" class="nav-btn">Équipes</a>
-      <a href="#" class="nav-btn login">Connexion équipe</a>
+      <a href="/" class="nav-btn {% if active_page == 'home' %}active{% endif %}">Tous les robots</a>
+      <a href="/classements" class="nav-btn {% if active_page == 'classements' %}active{% endif %}">Classements</a>
+      <a href="/forum" class="nav-btn {% if active_page == 'forum' %}active{% endif %}">Forum</a>
+      <a href="/contacts" class="nav-btn {% if active_page == 'contacts' %}active{% endif %}">Contacts</a>
+    </div>
+    <div class="hero">
+      <div class="hero-title">Tous les robots</div>
+      <div class="hero-text">Parcourez facilement les fiches de robots, filtrez par année et trouvez rapidement les meilleurs profils.</div>
     </div>
     <div class="year-filter">
       <div class="year-title">Années</div>
@@ -86,10 +83,6 @@
     <div class="stat">
       <div class="stat-num">{{ robots | length }}</div>
       <div class="stat-label">Robots archivés</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">{{ robots | map(attribute='equipe') | unique | list | length }}</div>
-      <div class="stat-label">Équipes</div>
     </div>
     <div class="stat">
       <div class="stat-num">{{ robots | map(attribute='annee') | unique | list | length }}</div>
@@ -109,7 +102,6 @@
           <span class="comp-badge badge-{{ robot.competition }}">{{ robot.competition }}</span>
         </div>
         <div class="robot-meta"><i class="ti ti-calendar" style="font-size:13px"></i> {{ robot.annee }}</div>
-        <div class="robot-team"><i class="ti ti-users" style="font-size:13px"></i> {{ robot.equipe }}</div>
         <div class="rank"><i class="ti ti-trophy"></i><span>{{ robot.classement }}e place</span></div>
       </div>
     </a>
