@@ -1,6 +1,6 @@
 import threading
 import webbrowser
-from flask import Flask, render_template, send_from_directory, request # type: ignore
+from flask import Flask, render_template, send_from_directory, request, jsonify # type: ignore
 
 app = Flask(__name__)
 
@@ -26,13 +26,24 @@ robots = [
     },
 ]
 
+forum_messages = [
+    {"pseudo": "RoboArchive", "message": "Bienvenue sur le forum de discussion !"}
+]
+
+ancien_participants = [
+    {"nom": "Lina Dupont", "promo": "2024", "role": "Pilote", "email": "lina.dupont@example.com", "tel": "+33 6 12 34 56 78"},
+    {"nom": "Karim Martin", "promo": "2023", "role": "Stratégie", "email": "karim.martin@example.com", "tel": "+33 6 87 65 43 21"},
+    {"nom": "Zoé Bernard", "promo": "2022", "role": "Mécanique", "email": "zoe.bernard@example.com", "tel": "+33 6 23 45 67 89"},
+    {"nom": "Thomas Leroy", "promo": "2025", "role": "Électronique", "email": "thomas.leroy@example.com", "tel": "+33 6 98 76 54 32"},
+]
+
 # --- Page d'accueil ---
 @app.route("/")
 def accueil():
     selected_year = request.args.get("annee", type=int)
     robots_filtered = [r for r in robots if r["annee"] == selected_year] if selected_year is not None else robots
     years = sorted({r["annee"] for r in robots}, reverse=True)
-    return render_template("acceuil.html", robots=robots_filtered, years=years, selected_year=selected_year) # type: ignore
+    return render_template("acceuil.html", robots=robots_filtered, years=years, selected_year=selected_year, active_page="home") # type: ignore
 
 # --- Page détail d'un robot ---
 @app.route("/robot/<int:robot_id>")
@@ -41,12 +52,32 @@ def detail_robot(robot_id):
     robot = next((r for r in robots if r["id"] == robot_id), None)
     if robot is None:
         return "Robot introuvable", 404
-    return render_template("detail.html", robot=robot) # type: ignore
+    return render_template("detail.html", robot=robot, active_page="detail") # type: ignore
+
+@app.route("/contacts")
+def contacts():
+    return render_template("contacts.html", participants=ancien_participants, active_page="contacts") # type: ignore
 
 @app.route("/classements")
 def classements():
     robots_sorted = sorted(robots, key=lambda r: r["classement"])
-    return render_template("classements.html", robots=robots_sorted) # type: ignore
+    return render_template("classements.html", robots=robots_sorted, active_page="classements") # type: ignore
+
+@app.route("/forum")
+def forum():
+    return render_template("forum.html", messages=forum_messages, active_page="forum") # type: ignore
+
+@app.route("/forum/messages")
+def forum_messages_json():
+    return jsonify({"messages": forum_messages})
+
+@app.route("/forum/post", methods=["POST"])
+def forum_post():
+    pseudo = request.form.get("pseudo", "Anon").strip() or "Anon"
+    message = request.form.get("message", "").strip()
+    if message:
+        forum_messages.append({"pseudo": pseudo, "message": message})
+    return jsonify({"success": True, "messages": forum_messages})
 
 @app.route('/template-logo.png')
 def template_logo():
