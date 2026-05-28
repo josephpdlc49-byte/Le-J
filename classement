@@ -39,20 +39,22 @@
       </div>
     </div>
     <div class="nav">
-      <a href="/" class="nav-btn">Tous les robots</a>
-      <a href="/classements" class="nav-btn active">Classements</a>
-      <a href="#" class="nav-btn">Équipes</a>
-      <a href="#" class="nav-btn login">Connexion équipe</a>
+      <a href="/" class="nav-btn {% if active_page == 'home' %}active{% endif %}">Tous les robots</a>
+      <a href="/classements" class="nav-btn {% if active_page == 'classements' %}active{% endif %}">Classements</a>
+      <a href="/forum" class="nav-btn {% if active_page == 'forum' %}active{% endif %}">Forum</a>
+      <a href="/contacts" class="nav-btn {% if active_page == 'contacts' %}active{% endif %}">Contacts</a>
     </div>
   </div>
   <div class="content">
-    <h1>Classements</h1>
+    <div class="hero">
+      <div class="hero-title">Classements</div>
+      <div class="hero-text">Visualisez les meilleures performances des robots classés par place et compétition.</div>
+    </div>
     <table class="table">
       <thead>
         <tr>
           <th>Place</th>
           <th>Nom</th>
-          <th>Équipe</th>
           <th>Année</th>
           <th>Compétition</th>
         </tr>
@@ -62,7 +64,6 @@
         <tr>
           <td>{{ robot.classement }}</td>
           <td class="robot-name"><a href="/robot/{{ robot.id }}" style="color: inherit; text-decoration: none;">{{ robot.nom }}</a></td>
-          <td>{{ robot.equipe }}</td>
           <td>{{ robot.annee }}</td>
           <td><span class="badge-FTC">{{ robot.competition }}</span></td>
         </tr>
